@@ -5,9 +5,28 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: './src/js/index.js',
+  entry: {
+    client: ['./src/js/index.js'],
+    vendor: ['phaser', 'socket.io-client'],
+  },
   output: {
+    filename: '[name].[chunkhash].bundle.js',
     path: path.resolve(__dirname, '../build'),
-    filename: 'bundle.js'
+    chunkFilename: '[name].[chunkhash].bundle.js',
+    publicPath: '/',
+  },
+  optimization: {
+    runtimeChunk: 'single',
+    splitChunks: {
+      cacheGroups: {
+        vendor: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendors',
+          enforce: true,
+          chunks: 'all'
+        }
+      }
+    }
   },
   plugins: [
     new CleanWebpackPlugin(),
