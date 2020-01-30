@@ -1,20 +1,11 @@
-function onLogin(socket) {
-  const login = document.getElementById('login').value;
-  const password = document.getElementById('password').value;
-
-  socket.emit('jwt_request', { username: login, password });
-
-  return false;
-};
-
-export function addedLoginForm(socket) {
+export function addedLoginForm(onLogin) {
   const layout = document.createElement("div");
   layout.setAttribute("id", "layout");
   layout.className = "login-layout";
 
   const form = document.createElement("form");
   form.className = "login-form";
-  form.onsubmit = () => onLogin(socket);
+  form.onsubmit = () => onLogin();
 
   const loginSpan = document.createElement("label");
   loginSpan.setAttribute("for", "login");
